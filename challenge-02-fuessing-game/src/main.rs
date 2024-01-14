@@ -2,6 +2,7 @@ use rand::Rng; // Rng 是一个 trait，用于定义随机数生成器应实现�
 use std::cmp::Ordering; // cmp 是 compare 的缩写，Ordering 是一个枚举
 use std::io; // prelude，io 是 input/output 的缩写，它定义了标准输入输出流的功能
 
+// 猜字游戏
 fn main() {
     // 生成一个 1-100 的随机数，（1..101 创建了一个从 1 到 100 的范围,包含 1，但不包含 101）
     let secret_number = rand::thread_rng().gen_range(1..101);
@@ -27,16 +28,14 @@ fn main() {
 
         println!("You guessed: {}", guess);
         match guess.cmp(&secret_number) {
-            // 如果 guess 和 secret_number 相等，就返回一个 Ordering::Equal 的值
+            // cmp 方法用于比较两个值并返回一个 Ordering 类型的值，这个类型有三个值：Less、Greater 和 Equal
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
             Ordering::Equal => {
                 println!("You win!");
                 // 退出循环
                 break;
             }
-            // 如果 guess 小于 secret_number，就返回一个 Ordering::Less 的值
-            Ordering::Less => println!("Too small!"),
-            // 如果 guess 大于 secret_number，就返回一个 Ordering::Greater 的值
-            Ordering::Greater => println!("Too big!"),
         }
     }
 }
